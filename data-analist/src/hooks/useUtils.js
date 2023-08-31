@@ -61,25 +61,6 @@ const useUtils = () => {
     []
   );
 
-  const mediumOfTimes = useCallback((times) => {
-    const secondsTimes = times.map((time) => {
-      const splitTime = time.split(":");
-      const secondsTime = parseInt(splitTime[0]) * 3600 + parseInt(splitTime[1]) * 60 + parseInt(splitTime[2]);
-      return secondsTime;
-    });
-
-    const fullTime = secondsTimes.reduce((acc, secondsTime) => acc + secondsTime);
-    const media = fullTime / times.length;
-    const mediumTime = new Date(media * 1000).toISOString().substr(11, 8);
-    const splitMediumTime = mediumTime.split(":").map((value) => value);
-
-    return {
-      hours: splitMediumTime[0],
-      minutes: splitMediumTime[1],
-      seconds: splitMediumTime[2],
-    };
-  }, []);
-
   const calcPercent = useCallback((small, larger) => {
     if (small > 0) {
       return Math.round((small / larger) * 100);
@@ -99,21 +80,6 @@ const useUtils = () => {
     fontSize = Number(fontSize.replace("px", ""));
     return fontSize;
   };
-
-  function formatDate(date, type) {
-    let fullDate = date.split("T")[0].split("-");
-    let formatedDate = "";
-
-    if (type === "DM") {
-      formatedDate = `${fullDate[2]}/${fullDate[1]}`;
-    } else if (type === "D") {
-      formatedDate = fullDate[2];
-    } else {
-      formatedDate = `${fullDate[2]}/${fullDate[1]}/${fullDate[0]}`;
-    }
-
-    return formatedDate;
-  }
 
   function getLimit(array, identifier) {
     let total = 0;
@@ -141,11 +107,9 @@ const useUtils = () => {
     limitName,
     toBRL,
     convertDateTobirthday,
-    mediumOfTimes,
     calcPercent,
     getPageDimensions,
     getFontSize,
-    formatDate,
     getLimit,
   };
 };

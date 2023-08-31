@@ -1,8 +1,16 @@
+import { Home } from "./pages";
+import { GlobalProvider } from "./contexts/GlobalContext";
+import { NotifierProvider } from "./contexts/NotifierContext";
+import GlobalNotifier from "./helpers/GlobalNotifier";
+
 function App() {
   return (
-    <>
-      <p className="text-green-600 text-9xl">rapaz</p>
-    </>
+    <GlobalProvider>
+      <NotifierProvider>
+        <Home />
+        <GlobalNotifier />
+      </NotifierProvider>
+    </GlobalProvider>
   );
 }
 
