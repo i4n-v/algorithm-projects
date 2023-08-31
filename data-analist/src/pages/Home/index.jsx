@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Box, Modal } from "../../components";
 import { FilterButton, SubmitButton } from "../../components/Buttons/index";
-import sales from "../../mocks/sales";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 export default function Home() {
+  const { sales } = useContext(GlobalContext);
   const [showSettings, setShowSettings] = useState(false);
   const [showSales, setShowSales] = useState(false);
 
-  console.log(sales.getStructure());
+  console.log(sales);
 
   function togleFilters() {
     setShowSettings((showSettings) => !showSettings);
