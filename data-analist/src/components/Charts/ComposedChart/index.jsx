@@ -11,10 +11,11 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
-import useUtils from "../../../utils/useUtils";
+import useUtils from "../../../hooks/useUtils";
+import CustomArray from "../../../entities/CustomArray";
 
 const ComposedChart = ({
-  data,
+  data = new CustomArray(),
   areas,
   areaSize = 0.2,
   bars,
@@ -159,7 +160,11 @@ const ComposedChart = ({
   return (
     <div className={className}>
       <ResponsiveContainer width="100%" height="100%">
-        <ChartComposed data={data} layout={layout} margin={margin}>
+        <ChartComposed
+          data={data.getStructure()}
+          layout={layout}
+          margin={margin}
+        >
           <CartesianGrid {...cartesiangrid} />
           {gradientsComponent}
           {barsComponent}

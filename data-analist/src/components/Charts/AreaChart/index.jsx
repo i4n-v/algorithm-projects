@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import useUtils from "../../../utils/useUtils";
+import useUtils from "../../../hooks/useUtils";
 
 const LineChart = ({
   data,

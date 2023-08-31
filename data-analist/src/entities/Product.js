@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format, getDay, getMonth, getYear, parseISO } from "date-fns";
 
 export default class Product {
   constructor(name, category, price, date) {
@@ -6,6 +6,9 @@ export default class Product {
     this.category = category;
     this.price = price;
     this.date = date;
+    this.day = getDay(parseISO(date));
+    this.month = getMonth(parseISO(date));
+    this.year = getYear(parseISO(date));
   }
 
   getDate() {
