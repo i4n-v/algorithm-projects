@@ -130,6 +130,34 @@ export default class CustomArray {
     }
   }
 
+  some(callback) {
+    if (callback instanceof Function) {
+      for (let index = 0; index < this.#value.length; index++) {
+        const condition = callback(this.#value[index], index, this.#value);
+
+        if (condition) {
+          return true;
+        }
+      }
+
+      return false;
+    } else {
+      throw new Error("Callback is not a function.");
+    }
+  }
+
+  includes(value) {
+    for (let index = 0; index < this.#value.length; index++) {
+      const condition = this.#value[index] === value;
+
+      if (condition) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   reduce(callback, initialValue) {
     if (callback instanceof Function) {
       let newValue;
@@ -145,7 +173,12 @@ export default class CustomArray {
       }
 
       for (let index = 0; index < newArray.getStructure().length; index++) {
-        newValue = callback(newValue, newArray.getValue(index), index, newArray.getStructure());
+        newValue = callback(
+          newValue,
+          newArray.getValue(index),
+          index,
+          newArray.getStructure()
+        );
       }
 
       return newValue;

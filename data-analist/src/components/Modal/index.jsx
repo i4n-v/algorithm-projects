@@ -18,7 +18,7 @@ const Modal = ({ display, title, className, fullWidth, children, onClose }) => {
       }}
     >
       <Box
-        className={`w-full mx-auto bg-neutral-50 p-4 animate-down ${
+        className={`w-full mx-auto bg-neutral-800/100 p-4 animate-down ${
           fullWidth ? "max-w-none" : "max-w-4xl"
         } ${className}`}
       >

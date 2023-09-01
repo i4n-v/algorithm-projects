@@ -10,9 +10,9 @@ const SimpleTooltip = ({
   className,
   ...props
 }) => {
-  if (active && payload && payload.getStructure().length) {
+  if (active && payload && payload.length) {
     return (
-      <Box className={`bg-neutral-50 min-h-20 min-w-40 p-2 ${className}`}>
+      <Box className={`bg-neutral-50/100 min-h-20 min-w-40 p-2 ${className}`}>
         <p className="font-title text-neutral-900 text-base">
           {labelFormatter
             ? labelFormatter(props.label, payload, props)

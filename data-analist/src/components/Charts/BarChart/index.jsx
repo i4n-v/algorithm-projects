@@ -11,9 +11,10 @@ import {
   Tooltip,
 } from "recharts";
 import useUtils from "../../../hooks/useUtils";
+import CustomArray from "../../../entities/CustomArray";
 
 const BarChart = ({
-  data,
+  data = new CustomArray(),
   bars,
   gradients,
   legend,
@@ -36,69 +37,73 @@ const BarChart = ({
 
   const barsComponent = useMemo(
     () =>
-      bars?.map((bar, index) => {
-        return (
-          <Bar
-            key={bar.key}
-            shape={shape || false}
-            dataKey={bar.key}
-            fill={
-              bar.gradient ? `url(#${bar.gradient})` : bar.color || "#44403c"
-            }
-            radius={radius}
-            stackId={bar.stackId || "stack-" + index}
-            maxBarSize={numberToRem(barSize)}
-            isAnimationActive={animation}
-            background={background}
-          >
-            {label && (
-              <LabelList
-                dataKey={bar.key}
-                fontFamily="Rubik"
-                fontSize="0.75rem"
-                fill="#44403c"
-                {...label}
-              />
-            )}
-          </Bar>
-        );
-      }),
+      bars
+        ?.map((bar, index) => {
+          return (
+            <Bar
+              key={bar.key}
+              shape={shape || false}
+              dataKey={bar.key}
+              fill={
+                bar.gradient ? `url(#${bar.gradient})` : bar.color || "#44403c"
+              }
+              radius={radius}
+              stackId={bar.stackId || "stack-" + index}
+              maxBarSize={numberToRem(barSize)}
+              isAnimationActive={animation}
+              background={background}
+            >
+              {label && (
+                <LabelList
+                  dataKey={bar.key}
+                  fontFamily="Rubik"
+                  fontSize="0.75rem"
+                  fill="#44403c"
+                  {...label}
+                />
+              )}
+            </Bar>
+          );
+        })
+        .getStructure(),
     [bars, barSize, animation, label, radius, shape, background, numberToRem]
   );
 
   const gradientsComponent = useMemo(
     () =>
-      gradients?.map((gradient, index) => {
-        return (
-          <defs key={gradient.id}>
-            <linearGradient
-              id={gradient.id || index}
-              x1={gradient.x1 || "0"}
-              x2={gradient.x2 || "0"}
-              y1={gradient.y1 || "1"}
-              y2={gradient.y2 || "0"}
-            >
-              <stop
-                offset="5%"
-                stopColor={gradient.from || "#a8a29e"}
-                stopOpacity={0.9}
-              />
-              <stop
-                offset="95%"
-                stopColor={gradient.to || "#44403c"}
-                stopOpacity={0.8}
-              />
-            </linearGradient>
-          </defs>
-        );
-      }),
+      gradients
+        ?.map((gradient, index) => {
+          return (
+            <defs key={gradient.id}>
+              <linearGradient
+                id={gradient.id || index}
+                x1={gradient.x1 || "0"}
+                x2={gradient.x2 || "0"}
+                y1={gradient.y1 || "1"}
+                y2={gradient.y2 || "0"}
+              >
+                <stop
+                  offset="5%"
+                  stopColor={gradient.from || "#a8a29e"}
+                  stopOpacity={0.9}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={gradient.to || "#44403c"}
+                  stopOpacity={0.8}
+                />
+              </linearGradient>
+            </defs>
+          );
+        })
+        .getStructure(),
     [gradients]
   );
 
   return (
     <div className={className}>
       <ResponsiveContainer width="100%" height="100%">
-        <ChartBar data={data} layout={layout} margin={margin}>
+        <ChartBar data={data.getStructure()} layout={layout} margin={margin}>
           {cartesiangrid && (
             <CartesianGrid {...cartesiangrid} stroke="#a3a3a3" />
           )}
@@ -107,13 +112,13 @@ const BarChart = ({
           {barsComponent}
           <XAxis
             fontSize="0.75rem"
-            tick={{ fill: "#44403c" }}
+            tick={{ fill: "#fafafa" }}
             {...x}
             domain={[0, limit || x?.dataKey]}
           />
           <YAxis
             fontSize="0.75rem"
-            tick={{ fill: "#44403c" }}
+            tick={{ fill: "#fafafa" }}
             {...y}
             domain={[0, limit || y?.dataKey]}
           />
@@ -127,7 +132,7 @@ const BarChart = ({
                     {title.title}
                   </span>
                 ),
-                color: title.color || "#44403c",
+                color: title.color || "#fafafa",
               }))}
               verticalAlign={legend.verticalAlign || "top"}
               iconSize={legend.iconSize || "0.5rem"}

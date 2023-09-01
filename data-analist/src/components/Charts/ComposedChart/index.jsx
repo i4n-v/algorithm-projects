@@ -40,120 +40,132 @@ const ComposedChart = ({
 
   const areasComponent = useMemo(
     () =>
-      areas?.map((line) => {
-        return (
-          <Area
-            key={line.key}
-            dataKey={line.key}
-            type={line?.type || "monotone"}
-            strokeWidth={numberToRem(areaSize)}
-            dot={line.dote || true}
-            connectNulls={true}
-            stroke={
-              line.gradient
-                ? `url(#line-${line.gradient})`
-                : line.color || "#404040"
-            }
-            fill={
-              line.gradient
-                ? `url(#area-${line.gradient})`
-                : line.color || "#d4d4d4"
-            }
-            radius={radius}
-            isAnimationActive={animation}
-          >
-            {label && (
-              <LabelList dataKey={line.key} fontFamily="Rubik" {...label} />
-            )}
-          </Area>
-        );
-      }),
+      areas
+        ?.map((line) => {
+          return (
+            <Area
+              key={line.key}
+              dataKey={line.key}
+              type={line?.type || "monotone"}
+              strokeWidth={numberToRem(areaSize)}
+              dot={line.dote || true}
+              connectNulls={true}
+              stroke={
+                line.gradient
+                  ? `url(#line-${line.gradient})`
+                  : line.color || "#404040"
+              }
+              fill={
+                line.gradient
+                  ? `url(#area-${line.gradient})`
+                  : line.color || "#d4d4d4"
+              }
+              radius={radius}
+              isAnimationActive={animation}
+            >
+              {label && (
+                <LabelList dataKey={line.key} fontFamily="Rubik" {...label} />
+              )}
+            </Area>
+          );
+        })
+        .getStructure(),
     [areas, areaSize, animation, label, radius, numberToRem]
   );
 
   const linesComponent = useMemo(
     () =>
-      lines?.map((line) => {
-        return (
-          <Line
-            key={line.key}
-            dataKey={line.key}
-            type={line?.type || "monotone"}
-            strokeWidth={numberToRem(lineSize)}
-            dot={line.dote || true}
-            connectNulls={true}
-            stroke={
-              line.gradient
-                ? `url(#line-${line.gradient})`
-                : line.color || "#404040"
-            }
-            radius={radius}
-            isAnimationActive={animation}
-          >
-            {label && (
-              <LabelList dataKey={line.key} fontFamily="Rubik" {...label} />
-            )}
-          </Line>
-        );
-      }),
+      lines
+        ?.map((line) => {
+          return (
+            <Line
+              key={line.key}
+              dataKey={line.key}
+              type={line?.type || "monotone"}
+              strokeWidth={numberToRem(lineSize)}
+              dot={line.dote || true}
+              connectNulls={true}
+              stroke={
+                line.gradient
+                  ? `url(#line-${line.gradient})`
+                  : line.color || "#404040"
+              }
+              radius={radius}
+              isAnimationActive={animation}
+            >
+              {label && (
+                <LabelList dataKey={line.key} fontFamily="Rubik" {...label} />
+              )}
+            </Line>
+          );
+        })
+        .getStructure(),
     [lines, lineSize, animation, label, radius, numberToRem]
   );
 
   const barsComponent = useMemo(
     () =>
-      bars?.map((bar, index) => {
-        return (
-          <Bar
-            key={bar.key}
-            shape={shape || false}
-            dataKey={bar.key}
-            fill={
-              bar.gradient
-                ? `url(#area-${bar.gradient})`
-                : bar.color || "#404040"
-            }
-            radius={radius}
-            stackId={bar.stackId || "stack-" + index}
-            maxBarSize={numberToRem(barSize)}
-            isAnimationActive={animation}
-          >
-            {label && (
-              <LabelList dataKey={bar.key} fontFamily="Rubik" {...label} />
-            )}
-          </Bar>
-        );
-      }),
+      bars
+        ?.map((bar, index) => {
+          return (
+            <Bar
+              key={bar.key}
+              shape={shape || false}
+              dataKey={bar.key}
+              fill={
+                bar.gradient
+                  ? `url(#area-${bar.gradient})`
+                  : bar.color || "#404040"
+              }
+              radius={radius}
+              stackId={bar.stackId || "stack-" + index}
+              maxBarSize={numberToRem(barSize)}
+              isAnimationActive={animation}
+            >
+              {label && (
+                <LabelList dataKey={bar.key} fontFamily="Rubik" {...label} />
+              )}
+            </Bar>
+          );
+        })
+        .getStructure(),
     [bars, barSize, animation, label, radius, shape, numberToRem]
   );
 
   const gradientsComponent = useMemo(
     () =>
-      gradients?.map((gradient, index) => {
-        return (
-          <defs key={gradient.id + "_" + index}>
-            <linearGradient
-              id={`area-${gradient.id || index}`}
-              x1={gradient.x1 || "0"}
-              x2={gradient.x2 || "0"}
-              y1={gradient.y1 || "1"}
-              y2={gradient.y2 || "0"}
-            >
-              <stop offset="5%" stopColor={gradient.from} stopOpacity={0.6} />
-              <stop offset="95%" stopColor={gradient.to} stopOpacity={1} />
-            </linearGradient>
-            <linearGradient
-              id={`line-${gradient.id || index}`}
-              x1="1"
-              x2="0"
-              y1="0"
-              y2="0"
-            >
-              <stop offset="5%" stopColor={gradient.to} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={gradient.from} stopOpacity={0.9} />
-            </linearGradient>
-          </defs>
-        );
-      }),
+      gradients
+        ?.map((gradient, index) => {
+          return (
+            <defs key={gradient.id + "_" + index}>
+              <linearGradient
+                id={`area-${gradient.id || index}`}
+                x1={gradient.x1 || "0"}
+                x2={gradient.x2 || "0"}
+                y1={gradient.y1 || "1"}
+                y2={gradient.y2 || "0"}
+              >
+                <stop offset="5%" stopColor={gradient.from} stopOpacity={0.6} />
+                <stop offset="95%" stopColor={gradient.to} stopOpacity={1} />
+              </linearGradient>
+              <linearGradient
+                id={`line-${gradient.id || index}`}
+                x1="1"
+                x2="0"
+                y1="0"
+                y2="0"
+              >
+                <stop offset="5%" stopColor={gradient.to} stopOpacity={0.8} />
+                <stop
+                  offset="95%"
+                  stopColor={gradient.from}
+                  stopOpacity={0.9}
+                />
+              </linearGradient>
+            </defs>
+          );
+        })
+        .getStructure(),
     [gradients]
   );
 

@@ -10,7 +10,7 @@ const FormSelectField = ({
   error,
   className,
 }) => {
-  const activeError = !!error[name];
+  const activeError = error && !!error[name];
   const { onChange, ...settings } = register(name);
 
   return (
@@ -33,21 +33,23 @@ const FormSelectField = ({
         id={name}
         disabled={disabled}
         {...settings}
-        defaultValue={defaultValue ? JSON.stringify(defaultValue) : null}
+        defaultValue={defaultValue}
         onChange={(event) => {
           onChange(event);
-          if (customHandleChange) customHandleChange();
+          if (customHandleChange) customHandleChange(event.target.value);
         }}
         className={`w-full h-full bg-neutral-50 rounded-md outline-none disabled:cursor-default disabled:hover:border border text-center ${
           activeError ? "border-red-400" : "border-violet-400"
         } hover:border-2 focus:border-2 text-sm text-neutral-700 placeholder:text-neutral-400 px-2`}
       >
         {!!defaultValue && <option value={defaultValue}>{defaultValue}</option>}
-        {options?.map((option, index) => (
-          <option key={`${option}-${index}`} value={option}>
-            {option}
-          </option>
-        ))}
+        {options
+          ?.map((option, index) => (
+            <option key={`${option}-${index}`} value={option}>
+              {option}
+            </option>
+          ))
+          .getStructure()}
       </select>
       {activeError && (
         <p className="text-xs text-red-300 max-w-full ml-3">
