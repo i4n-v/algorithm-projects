@@ -1,7 +1,9 @@
 import { format, getDay, getMonth, getYear, parseISO } from "date-fns";
+import { v4 } from "uuid";
 
 export default class Product {
   constructor(name, category, price, date) {
+    this.id = v4();
     this.name = name;
     this.category = category;
     this.price = price;

@@ -13,29 +13,39 @@ const FormField = ({
   placeholder,
   register,
   error,
+  customHandleChange,
   className,
+  ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const activeError = !!error[name];
+  const activeError = error && !!error[name];
+
+  const { onChange, ...settings } = register(name);
 
   const togleShowPassword = () => {
     setShowPassword((showPassword) => !showPassword);
   };
 
   return (
-    <div className={`h-12 relative ${className}`}>
+    <div
+      className={`h-12 ${
+        type === "checkbox" ? "flex gap-1 items-center" : "relative"
+      } ${className}`}
+    >
       {label && (
         <label
           htmlFor={name}
           className={`text-xs ${
             activeError ? "text-red-400" : " text-violet-400"
-          } absolute -top-2.5 left-3 px-1`}
+          } ${type === "checkbox" ? "" : "absolute -top-2.5 left-3 px-1"}`}
         >
           <span className="relative z-10">
             {required && <span className="text-red-400 mr-1">*</span>}
             {label}
           </span>
-          <span className="absolute top-2.5 left-0 w-full h-1 bg-neutral-50"></span>
+          {type !== "checkbox" && (
+            <span className="absolute top-2.5 left-0 w-full h-1 bg-neutral-50" />
+          )}
         </label>
       )}
       <input
@@ -43,7 +53,12 @@ const FormField = ({
         type={showPassword ? "text" : type}
         disabled={disabled}
         autoComplete="off"
-        {...register(name)}
+        {...settings}
+        {...props}
+        onChange={(event) => {
+          onChange(event);
+          if (customHandleChange) customHandleChange(event.target.value);
+        }}
         placeholder={placeholder}
         className={`w-full h-full bg-neutral-50 rounded-md outline-none disabled:cursor-default disabled:hover:border border ${
           activeError ? "border-red-400" : "border-violet-400"
