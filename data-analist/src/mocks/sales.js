@@ -8,7 +8,7 @@ import { format, getMonth, getYear, parseISO } from "date-fns";
 const products = new CustomArray();
 const sales = new CustomArray();
 
-for (let index = 1; index <= 1000; index++) {
+for (let index = 1; index <= 50; index++) {
   const number = randomNumber(0, categories.getStructure().length - 1);
   let date;
   const category = categories.getValue(number);

@@ -6,6 +6,8 @@ import SimpleTooltip from "../../components/Tooltips/SimpleTooltip";
 import { ComposedChart } from "../../components/Charts";
 import useUtils from "../../hooks/useUtils";
 import CustomArray from "../../entities/CustomArray";
+import SalesList from "./Sales/SalesList";
+import SalesForm from "./Sales/SalesForm";
 
 export default function Home() {
   const { sales } = useContext(GlobalContext);
@@ -26,20 +28,26 @@ export default function Home() {
 
     return newArray;
   }, new CustomArray());
+  const [formSales, setFormSales] = useState(false);
 
   function togleFilters() {
     setShowSettings((showSettings) => !showSettings);
   }
 
-  function togleSales() {
+  function togleSalesList() {
     setShowSales((showSales) => !showSales);
+  }
+
+  function togleSalesForm() {
+    setFormSales((showSales) => !showSales);
   }
 
   return (
     <section className="bg-neutral-900 min-h-screen px-2 py-8 flex flex-col gap-32">
       <Box className="flex justify-between gap-2 bg-transparent/0">
         <FilterButton onClick={togleFilters}>Configurações</FilterButton>
-        <SubmitButton onClick={togleSales}>Visualizar vendas</SubmitButton>
+        <SubmitButton onClick={togleSalesForm}>Cadastrar vendas</SubmitButton>
+        <SubmitButton onClick={togleSalesList}>Visualizar vendas</SubmitButton>
       </Box>
       <Modal
         title="Configurações"
@@ -49,9 +57,19 @@ export default function Home() {
       <Modal
         title="Listagem de vendas"
         display={showSales}
-        onClose={togleSales}
+        onClose={togleSalesList}
         fullWidth
-      ></Modal>
+        >
+        <SalesList />
+      </Modal>
+      <Modal
+        title="Cadastro de vendas"
+        display={formSales}
+        onClose={togleSalesForm}
+        fullWidth
+      >
+        <SalesForm />
+      </Modal>
 
       <ComposedChart
         data={data}
