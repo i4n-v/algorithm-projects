@@ -7,6 +7,7 @@ const Table = ({
   className = "",
   headerClassName = "",
   bodyClassName = "",
+  handleDelete = () => null
 }) => {
   return (
     <table className={`rounded-md bg-transparent w-full ${className} `}>
@@ -22,6 +23,7 @@ const Table = ({
               {column}
             </th>
           )).getStructure()}
+          <th className="first:rounded-tl-md last:rounded-tr-md h-8 flex-1 text-center">Excluir</th>
         </tr>
       </thead>
       <tbody
@@ -33,6 +35,9 @@ const Table = ({
             className="even:bg-neutral-900/10 h-6 flex justify-between text-white"
           >
             {Object.entries(row).map(([key, value], tdIndex) => {
+              if (disabledIdentifier.includes(key)) {
+                return
+              }
               return (
                 <td
                   key={`td-${key}-${tdIndex}`}
@@ -46,6 +51,9 @@ const Table = ({
                 </td>
               );
             })}
+            <td className={"text-center flex-1 cursor-pointer hover:backdrop-brightness-75"} onClick={() => handleDelete(row.id)}>
+              <span className="text-white w-full">&#967;</span>
+            </td>
           </tr>
         )).getStructure()}
       </tbody>
