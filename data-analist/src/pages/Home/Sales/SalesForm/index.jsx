@@ -85,9 +85,9 @@ export default function SalesForm() {
 
     }, [])
     return (
-        <Box className={"bg-white"}>
+        <Box >
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Box className="flex flex-col gap-6 bg-white">
+                <Box className="flex flex-col gap-6 ">
                     <FormSelectField register={register} name={"category"} label={'category'} error={errors} options={categories} />
                     <FormField register={register} name={"name"} type={'text'} label={'Nome'} error={errors} />
                     <FormField register={register} name={"date"} type={'date'} label={'Data'} error={errors} />
