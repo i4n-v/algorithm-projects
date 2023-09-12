@@ -4,10 +4,16 @@ import CustomArray from "../../../../entities/CustomArray";
 import { GlobalContext } from "../../../../contexts/GlobalContext";
 
 export default function SalesList() {
-
-  const columns = new CustomArray("Nome", "Categoria", "Preço", "Dia", "Mês", "Ano")
-  const disabledIdentifier = new CustomArray("id", 'date')
-  const { sales, setSales } = useContext(GlobalContext)
+  const columns = new CustomArray(
+    "Nome",
+    "Categoria",
+    "Preço",
+    "Dia",
+    "Mês",
+    "Ano"
+  );
+  const disabledIdentifier = new CustomArray("id", "date");
+  const { sales, setSales } = useContext(GlobalContext);
   const data = sales?.reduce((previous, year) => {
     const newArray = new CustomArray(...previous.getStructure());
 
@@ -22,35 +28,43 @@ export default function SalesList() {
     return newArray;
   }, new CustomArray());
 
-
-
   function handleDelete(id) {
     const data = sales?.reduce((previous, year) => {
       const newArray = new CustomArray();
 
       sales.forEach((year, yearIndex) => {
-        newArray.push(new CustomArray())
+        newArray.push(new CustomArray());
         year.forEach((month, monthIndex) => {
-          newArray.getValue(yearIndex).push(new CustomArray())
+          newArray.getValue(yearIndex).push(new CustomArray());
 
           month.forEach((category) => {
-            const newCategories = category.filter(product => !(product.id === id))
-            newArray.getValue(yearIndex).getValue(monthIndex).push(newCategories)
+            const newCategories = category.filter(
+              (product) => !(product.id === id)
+            );
+            newArray
+              .getValue(yearIndex)
+              .getValue(monthIndex)
+              .push(newCategories);
           });
         });
       });
 
-      return newArray
+      return newArray;
     }, new CustomArray());
-    data.filter(curr => {
-      console.log(curr.getValue(0).getValue(0).getValue(0))
-      return true
+    data.filter((curr) => {
+      console.log(curr.getValue(0).getValue(0).getValue(0));
+      return true;
     });
-    setSales(data)
+    setSales(data);
   }
   return (
-    <Box className="max-h-96 overflow-auto" >
-      <Table columns={columns} rows={data} disabledIdentifier={disabledIdentifier} handleDelete={handleDelete} />
+    <Box className="max-h-[50rem] overflow-auto">
+      <Table
+        columns={columns}
+        rows={data}
+        disabledIdentifier={disabledIdentifier}
+        handleDelete={handleDelete}
+      />
     </Box>
-  )
+  );
 }

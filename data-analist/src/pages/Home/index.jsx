@@ -134,8 +134,12 @@ export default function Home() {
     <section className="bg-neutral-900 min-h-screen px-2 py-8 flex flex-col gap-32">
       <Box className="flex justify-between gap-2 bg-transparent/0">
         <FilterButton onClick={togleFilters}>Configurações</FilterButton>
-        <SubmitButton onClick={togleSalesForm}>Cadastrar vendas</SubmitButton>
-        <SubmitButton onClick={togleSalesList}>Visualizar vendas</SubmitButton>
+        <Box className="flex gap-8">
+          <SubmitButton onClick={togleSalesForm}>Cadastrar vendas</SubmitButton>
+          <SubmitButton onClick={togleSalesList}>
+            Visualizar vendas
+          </SubmitButton>
+        </Box>
       </Box>
       <Modal
         title="Configurações"
@@ -156,7 +160,6 @@ export default function Home() {
         title="Cadastro de vendas"
         display={formSales}
         onClose={togleSalesForm}
-        fullWidth
       >
         <SalesForm />
       </Modal>
