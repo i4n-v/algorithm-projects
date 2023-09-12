@@ -1,7 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Box, Table } from "../../../../components";
 import CustomArray from "../../../../entities/CustomArray";
 import { GlobalContext } from "../../../../contexts/GlobalContext";
+import useUtils from "../../../../hooks/useUtils";
 
 export default function SalesList() {
   const columns = new CustomArray(
@@ -14,13 +15,19 @@ export default function SalesList() {
   );
   const disabledIdentifier = new CustomArray("id", "date");
   const { sales, setSales } = useContext(GlobalContext);
+  const { toBRL } = useUtils();
+
   const data = sales?.reduce((previous, year) => {
     const newArray = new CustomArray(...previous.getStructure());
 
     year.forEach((month) => {
       month.forEach((category) => {
         category.forEach((product) => {
-          newArray.push(product);
+          const newProduct = {
+            ...product,
+            price: toBRL(product.price),
+          };
+          newArray.push(newProduct);
         });
       });
     });
