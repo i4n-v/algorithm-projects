@@ -8,8 +8,8 @@ export default class Product {
     this.category = category;
     this.price = price;
     this.date = date;
-    this.day = getDay(parseISO(date));
-    this.month = getMonth(parseISO(date));
+    this.day = getDay(parseISO(date)) + 1;
+    this.month = getMonth(parseISO(date)) + 1;
     this.year = getYear(parseISO(date));
   }
 
