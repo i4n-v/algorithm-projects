@@ -1,0 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: rgb(26, 26, 26);
+  color: white;
+}
+
+@keyframes slideFromRight {
+  to {
+    margin-left: 0;
+  }
+}
