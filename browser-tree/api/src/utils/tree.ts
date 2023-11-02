@@ -25,7 +25,7 @@ class Tree {
   }
 
   private insertNode(node: Node, newNode: Node) {
-    if (newNode.value.title < node.value.title) {
+    if (newNode.value.title.length < node.value.title.length) {
       if (node.leftNode === null) {
         node.leftNode = newNode;
       } else {
@@ -73,11 +73,11 @@ class Tree {
     if (node === null) return null;
 
     const regex = new RegExp(value, 'i');
-    const macth = regex.test(node.value.title) || regex.test(node.value.description);
+    const match = regex.test(node.value.title) || regex.test(node.value.description);
 
-    if (macth) return node;
+    if (match) return node;
 
-    if (value < node.value.title) {
+    if (value.length < node.value.title.length) {
       return this.searchNode(node.leftNode, value);
     }
 

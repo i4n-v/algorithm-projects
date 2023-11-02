@@ -9,13 +9,13 @@ export default async function crawler() {
     const storageSites = await SiteRepositorie.findAll(['url']);
 
     const urls: string[] = [
-      'https://www.facebook.com/',
-      'https://www.instagram.com/',
-      'https://stackoverflow.com/',
+      'https://www.facebook.com',
+      'https://www.instagram.com',
+      'https://stackoverflow.com',
       'https://myanimelist.net',
-      'https://www.youtube.com/',
-      'https://www.amazon.com.br/',
-      'https://pt.aliexpress.com/',
+      'https://www.youtube.com',
+      'https://www.amazon.com.br',
+      'https://pt.aliexpress.com',
       'https://www.google.com',
       'https://www.wikipedia.org',
       'https://twitter.com',
@@ -66,8 +66,12 @@ export default async function crawler() {
       const description =
         $('meta[name="description"]').attr('content') ||
         $('meta[property="og:description"]').attr('content');
-      const favicon_url =
+      let favicon_url =
         $('link[rel="icon"]').attr('href') || $('link[rel="shortcut icon"]').attr('href');
+
+      if (favicon_url && !favicon_url.includes('http') && !favicon_url.includes('//')) {
+        favicon_url = url + favicon_url;
+      }
 
       await SiteRepositorie.create({
         url,
