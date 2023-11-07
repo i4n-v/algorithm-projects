@@ -36,10 +36,17 @@ export default function SiteResult({
         sx={{
           width: "100%",
           marginLeft: "100%",
+          cursor: "pointer",
           animation: `slideFromRight 0.5s ease-in-out ${
             index * 0.01
           }s forwards`,
           ...sx,
+        }}
+        onClick={() => {
+          const link = document.createElement("a");
+          link.href = url;
+          link.target = "_blank";
+          link.click();
         }}
       >
         <Box
