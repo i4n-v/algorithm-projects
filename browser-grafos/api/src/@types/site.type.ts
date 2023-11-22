@@ -4,6 +4,7 @@ interface ISite {
   favicon_url: string;
   title: string;
   description: string;
+  links: ISite[] | null;
 }
 
 export default ISite;

@@ -47,10 +47,30 @@ class SiteRepositorie {
         origin.description;
     `);
 
-    return rows as ISearch[];
+    const filteredRows: ISearch[] = [];
+
+    rows.forEach((row) => {
+      const isInRows = filteredRows.some((filteredRow) => {
+        if (filteredRow.id === row.id) {
+          return true;
+        }
+
+        if (filteredRow.links) {
+          return filteredRow.links.some((link) => link.id === row.id);
+        }
+
+        return false;
+      });
+
+      if (!isInRows) {
+        filteredRows.push(row);
+      }
+    });
+
+    return filteredRows;
   }
 
-  async create({ title, description, url, favicon_url }: Omit<ISite, 'id'>) {
+  async create({ title, description, url, favicon_url }: Omit<ISite, 'id' | 'links'>) {
     const {
       rows: [row],
     } = await this.client.query(
